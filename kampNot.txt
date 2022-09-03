@@ -1,0 +1,42 @@
+onion architecture
+clean architecture
+cqrs
+event güdümlü yapı
+domain driven development - ddd
+Madiator pattern
+
+Middleware'ler WebApi'ın içindeki Program.cs dosyasına eklenir.
+
+KATMANLAR
+application => business (eventler kontrol edilir, dış servisler burada kontrol edilir)
+domain => entities
+infastructure => Dış sistem servis adaptasyonları için (adapters)
+persistence => dataAccess 
+webApi
+
+
+Repository: Veritabanına rahat crud yapılabilmesi için kullanılan bir design pattern. 
+Adapter pattern: Dış servisleri entegre etmek için kullanılan yöntem
+
+MIGRATION
+tools  > nuget package manager > package manager console
+Migration yaparken startup webapi, nuget konsolunda da default proje persistence katmanı olmalı.
+add-migration [migration_name] 
+update-database
+
+CQRS (Command Query Responsibility Segregation) (Application katmanına implement edilir) (Prensip)
+Veritabanında değişiklik yapan işlemlere Command denir. (Mediatr)
+	Bir Command sadece bir amaçla kullanılabilir. Command'ler içlerinde ihtiyaç duydukları alanların property'lerini içerir. Command'ler handlerlar ile çalışır.
+	Madiator her zaman içine Command alır. RequestHandler ilk parametre olarak Command'i alır. 
+Select işlemlerine Query denir.  
+
+
+Projede validation aspect kullanmak yerine mediatr ın behavior'ları kullanıldı. Mantık olarak aop'ye benziyor.
+
+
+1. hafta
+Clean Architecture - CQRS
+2. hafta
+CQRS - Exception Handling
+3. hafta
+CQRS devam - Fluent Validation
