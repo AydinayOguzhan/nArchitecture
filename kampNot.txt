@@ -40,3 +40,5 @@ Clean Architecture - CQRS
 CQRS - Exception Handling
 3. hafta
 CQRS devam - Fluent Validation
+4. hafta
+Kompleks modelleme ve Dynamic Search

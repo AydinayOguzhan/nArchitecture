@@ -14,7 +14,8 @@ namespace Persistence.Contexts
     {
         protected IConfiguration Configuration { get; set; }
         public DbSet<Brand> Brands { get; set; }
-       
+        public DbSet<Model> Models { get; set; }
+
 
         public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
         {
@@ -30,17 +31,36 @@ namespace Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Entity Framework fluent mapping
+
             modelBuilder.Entity<Brand>(a =>
             {
-                a.ToTable("Brands").HasKey(k => k.Id); //Primary key konfigurasyonu
+                a.ToTable("Brands").HasKey(k => k.Id); //Tablonun adı ve primary key'i
                 a.Property(p => p.Id).HasColumnName("Id"); //Kolon konfigurasyonu
                 a.Property(p => p.Name).HasColumnName("Name"); //kolon konfigurasyonu
+
+                a.HasMany(p => p.Models);
+            });
+
+            modelBuilder.Entity<Model>(m =>
+            {
+                m.ToTable("Models").HasKey(k => k.Id);
+                m.Property(p => p.Id).HasColumnName("Id");
+                m.Property(p => p.BrandId).HasColumnName("BrandId");
+                m.Property(p => p.Name).HasColumnName("Name");
+                m.Property(p => p.DailyPrice).HasColumnName("DailyPrice");
+                m.Property(p => p.ImageUrl).HasColumnName("ImageUrl");
+
+                m.HasOne(p => p.Brand); 
             });
 
 
             //Development ortamı için oluşturulan örnek datalar
             Brand[] brandEntitySeeds = { new(1, "BMW"), new(2, "Mercedes"), new(3, "Ford") };
             modelBuilder.Entity<Brand>().HasData(brandEntitySeeds);
+
+            Model[] modelEntitySeeds = { new(1,1,"Series 4", 1500, ""), new(2, 1, "Series 3", 1200, ""), new(3, 2, "A180", 1000, "") };
+            modelBuilder.Entity<Model>().HasData(modelEntitySeeds);
 
            
         }

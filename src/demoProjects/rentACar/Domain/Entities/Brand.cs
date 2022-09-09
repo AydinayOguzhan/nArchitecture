@@ -11,6 +11,7 @@ namespace Domain.Entities
     {
         //Veritabanı objesi. Entity üzerinde default olarak tanımlanmış Id sütunu olduğu için bir daha tanımlamaya gerek yok.
         public string Name { get; set; }
+        public virtual ICollection<Model> Models { get; set; } //Markanın birden çok modeli olacağı için Collection (Liste) olarak tanımlandı
 
         public Brand()
         {
